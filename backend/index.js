@@ -16,6 +16,8 @@ app.use(function(req, res, next) {
 // App
 app.get('/', (req, res) => {
 
+    console.log(`GET/ Requested on ${(new Date).toLocaleTimeString()}`);
+
     let data = [
         { firstName: 'Carita', lastName: 'Dacre', email: 'cdacre0@zimbio.com'},
         { firstName: 'Helaine', lastName: 'Staden', email: 'hstaden1@msn.com'},

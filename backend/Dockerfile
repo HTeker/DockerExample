@@ -16,17 +16,21 @@ RUN npm install
 COPY --chown=app:app . .
 
 # make dirs
-RUN mkdir ../artifacts ../shared
+RUN mkdir /shared
 
-# create symlink
-RUN ln -sf ../artifacts ../shared/artifacts
+# create log file because non-root user cannot create it upon startup
+#RUN touch /app/backend_logs/backend.log
 
 # zip app
-RUN apt-get update && apt-get -y install zip && zip -r ../artifacts/backend.zip .
+RUN apt-get update && apt-get -y install zip && zip -r backend.zip .
+
+# create symlink
+RUN ln -sf /app/backend.log /shared
+RUN ln -sf /app/backend.zip /shared
 
 EXPOSE 8080
 
 # switch to user 'app' before running container
 USER app
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "start", ">", "backend.log" ]
