@@ -1,0 +1,23 @@
+version: "3"
+services:
+
+  api:
+    build: ./backend
+    networks:
+      - webnet
+    ports:
+      - "8080:8080"
+
+  app:
+    build: ./frontend
+    networks:
+      - webnet
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API: //192.168.99.100:8080
+
+networks:
+  webnet:
